@@ -14,7 +14,7 @@ public class ParticipantController {
         this.participantService = participantService;
     }
 
-     @GetMapping("/all")
+     @GetMapping
     public List<ParticipantDTO> getAllParticipants() {
         return participantService.getAllParticipants();
     }
@@ -29,7 +29,7 @@ public class ParticipantController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ParticipantDTO createParticipant(@RequestBody ParticipantDTO participant) {
         return participantService.createParticipant(participant);
     }

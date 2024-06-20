@@ -17,11 +17,9 @@ public class ResultDTO {
 
         private Long id;
         private String resultValue;
-        private Long participantId;
-        private Long disciplineId;
+        private String participantName;
+        private String disciplineName;
         private LocalDate date;
 
-        private ParticipantDTO participant;
-        private DisciplineDTO discipline;
 
 }

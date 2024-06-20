@@ -1,8 +1,10 @@
 package dat3.eksamensprojekt.result;
 
 import dat3.eksamensprojekt.discipline.Discipline;
+import dat3.eksamensprojekt.discipline.DisciplineDTO;
 import dat3.eksamensprojekt.discipline.DisciplineRepository;
 import dat3.eksamensprojekt.participant.Participant;
+import dat3.eksamensprojekt.participant.ParticipantDTO;
 import dat3.eksamensprojekt.participant.ParticipantRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +34,10 @@ public class ResultService {
     }
 
     public ResultDTO createResult(ResultDTO resultDTO) {
-        Participant participant = participantRepository.findById(resultDTO.getParticipantId())
-                .orElseThrow(() -> new IllegalArgumentException("Participant not found with ID: " + resultDTO.getParticipantId()));
-        Discipline discipline = disciplineRepository.findById(resultDTO.getDisciplineId())
-                .orElseThrow(() -> new IllegalArgumentException("Discipline not found with ID: " + resultDTO.getDisciplineId()));
+        Participant participant = participantRepository.findByName(resultDTO.getParticipantName())
+                .orElseThrow(() -> new IllegalArgumentException("Participant not found with name: " + resultDTO.getParticipantName()));
+        Discipline discipline = disciplineRepository.findByName(resultDTO.getDisciplineName())
+                .orElseThrow(() -> new IllegalArgumentException("Discipline not found with name: " + resultDTO.getDisciplineName()));
 
         Result result = new Result();
         result.setParticipant(participant);
@@ -52,10 +54,10 @@ public class ResultService {
         Result existingResult = resultRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Result not found with ID: " + id));
 
-        Participant participant = participantRepository.findById(resultDTO.getParticipantId())
-                .orElseThrow(() -> new IllegalArgumentException("Participant not found with ID: " + resultDTO.getParticipantId()));
-        Discipline discipline = disciplineRepository.findById(resultDTO.getDisciplineId())
-                .orElseThrow(() -> new IllegalArgumentException("Discipline not found with ID: " + resultDTO.getDisciplineId()));
+        Participant participant = participantRepository.findByName(resultDTO.getParticipantName())
+                .orElseThrow(() -> new IllegalArgumentException("Participant not found with name: " + resultDTO.getParticipantName()));
+        Discipline discipline = disciplineRepository.findByName(resultDTO.getDisciplineName())
+                .orElseThrow(() -> new IllegalArgumentException("Discipline not found with name: " + resultDTO.getDisciplineName()));
 
         existingResult.setParticipant(participant);
         existingResult.setDiscipline(discipline);
@@ -76,17 +78,15 @@ public class ResultService {
 
 
     public ResultDTO convertToDTO(Result result) {
-        ResultDTO resultDTO = new ResultDTO();
-        resultDTO.setId(result.getId());
-        resultDTO.setParticipantId(result.getParticipant().getId());
-        resultDTO.setDisciplineId(result.getDiscipline().getId());
-        resultDTO.setDate(result.getDate());
-        resultDTO.setResultValue(result.getResultValue());
+           ResultDTO dto = new ResultDTO();
+            dto.setId(result.getId());
+            dto.setParticipantName(result.getParticipant().getName());
+            dto.setDisciplineName(result.getDiscipline().getName());
+            dto.setDate(result.getDate());
+            dto.setResultValue(result.getResultValue());
 
-        return resultDTO;
-    }
-
-
+            return dto;
+        }
 
 
 }

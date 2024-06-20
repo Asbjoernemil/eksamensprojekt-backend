@@ -34,4 +34,18 @@ public class ResultController {
         return ResponseEntity.ok(createdResult);
 
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ResultDTO> updateResult(@PathVariable Long id, @RequestBody ResultDTO resultDTO) {
+        ResultDTO updatedResult = resultService.updateResult(id, resultDTO);
+        return updatedResult != null ? ResponseEntity.ok(updatedResult) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteResult(@PathVariable Long id) {
+        resultService.deleteResult(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

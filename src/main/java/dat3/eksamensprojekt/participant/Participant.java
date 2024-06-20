@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int age;
+    private LocalDate birthDate;
     private String club;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +32,7 @@ public class Participant {
 
 private Set<Discipline> disciplines = new HashSet<>();
 
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Result> results = new HashSet<>();
 
 
@@ -41,10 +42,10 @@ private Set<Discipline> disciplines = new HashSet<>();
     }
 
 
-    public Participant(String name, Gender gender, int age, String club) {
+    public Participant(String name, Gender gender, LocalDate birthDate, String club) {
         this.name = name;
         this.gender = gender;
-        this.age = age;
+        this.birthDate = birthDate;
         this.club = club;
     }
 
