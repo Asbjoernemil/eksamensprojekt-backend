@@ -44,11 +44,8 @@ public class DisciplineService {
         return convertToDTO(savedDiscipline); // Convert and return the saved discipline as DTO
     }
 
-    public DisciplineDTO deleteDiscipline(Long id) {
-        disciplineRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Discipline not found with ID: " + id));
+    public void deleteDiscipline(Long id) {
         disciplineRepository.deleteById(id);
-
     }
 
     public DisciplineDTO convertToDTO(Discipline discipline) {

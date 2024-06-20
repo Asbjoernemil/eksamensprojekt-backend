@@ -1,9 +1,13 @@
 package dat3.eksamensprojekt.participant;
 
+import dat3.eksamensprojekt.discipline.Discipline;
+import dat3.eksamensprojekt.discipline.DisciplineDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,9 +17,10 @@ public class ParticipantDTO {
 
         private Long id;
         private String name;
-        private String gender;
+        private Participant.Gender gender;
         private int age;
         private String club;
+        private Set<DisciplineDTO> discipline;
 
 
 }

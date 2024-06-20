@@ -27,6 +27,7 @@ public class Result {
     private LocalDate date;
     private String resultValue;
 
+
     public Result(Participant participant, Discipline discipline, LocalDate date, String resultValue) {
         this.participant = participant;
         this.discipline = discipline;
@@ -36,5 +37,6 @@ public class Result {
 
     public Result() {
     }
+
 
 }

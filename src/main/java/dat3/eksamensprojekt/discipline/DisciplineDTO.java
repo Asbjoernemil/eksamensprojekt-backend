@@ -14,6 +14,7 @@ public class DisciplineDTO {
 
         private Long id;
         private String name;
-        private String resultType;
+        private Discipline.ResultType resultType;
+
 
 }

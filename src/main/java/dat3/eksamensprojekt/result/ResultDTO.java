@@ -1,5 +1,7 @@
 package dat3.eksamensprojekt.result;
 
+import dat3.eksamensprojekt.discipline.DisciplineDTO;
+import dat3.eksamensprojekt.participant.ParticipantDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +20,8 @@ public class ResultDTO {
         private Long participantId;
         private Long disciplineId;
         private LocalDate date;
+
+        private ParticipantDTO participant;
+        private DisciplineDTO discipline;
+
 }

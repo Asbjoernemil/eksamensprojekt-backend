@@ -16,17 +16,25 @@ public class Discipline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String resultType;
 
-    @ManyToMany(mappedBy = "discipline")
+    @Enumerated(EnumType.STRING)
+    private ResultType resultType;
+
+    @ManyToMany(mappedBy = "disciplines")
     private Set<Participant> participants = new HashSet<>();
 
-    public Discipline(String name, String resultType) {
+    public Discipline(String name, ResultType resultType) {
         this.name = name;
         this.resultType = resultType;
     }
 
     public Discipline() {
+    }
+
+    public enum ResultType {
+        TIME,
+        DISTANCE,
+        POINTS
     }
 
 }
