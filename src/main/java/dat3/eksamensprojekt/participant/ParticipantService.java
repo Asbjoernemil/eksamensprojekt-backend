@@ -71,7 +71,7 @@ public List<ParticipantDTO> getAllParticipants() {
         }
 
         Participant savedParticipant = participantRepository.save(participant);
-        return convertToDTO(savedParticipant); // Convert and return the saved participant as DTO
+        return convertToDTO(savedParticipant);
     }
 
     public ParticipantDTO updateParticipant(Long id, ParticipantDTO participantDTO) {

@@ -35,8 +35,8 @@ public class DisciplineService {
         discipline.setId(disciplineDTO.getId());
         discipline.setName(disciplineDTO.getName());
         discipline.setResultType(disciplineDTO.getResultType());
-        Discipline savedDiscipline = disciplineRepository.save(discipline); // Save the discipline
-        return convertToDTO(savedDiscipline); // Convert and return the saved discipline as DTO
+        Discipline savedDiscipline = disciplineRepository.save(discipline);
+        return convertToDTO(savedDiscipline);
     }
 
     public DisciplineDTO updateDiscipline(Long id, DisciplineDTO discipline) {
@@ -44,8 +44,8 @@ public class DisciplineService {
                 .orElseThrow(() -> new IllegalArgumentException("Discipline not found with ID: " + id));
         existingDiscipline.setName(discipline.getName());
         existingDiscipline.setResultType(discipline.getResultType());
-        Discipline savedDiscipline = disciplineRepository.save(existingDiscipline); // Save the discipline
-        return convertToDTO(savedDiscipline); // Convert and return the saved discipline as DTO
+        Discipline savedDiscipline = disciplineRepository.save(existingDiscipline);
+        return convertToDTO(savedDiscipline);
     }
 
     public void deleteDiscipline(Long id) {
