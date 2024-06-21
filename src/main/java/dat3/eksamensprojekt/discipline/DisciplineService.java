@@ -1,6 +1,8 @@
 package dat3.eksamensprojekt.discipline;
 
+import dat3.eksamensprojekt.participant.ParticipantRepository;
 import org.springframework.stereotype.Service;
+import dat3.eksamensprojekt.participant.Participant;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,10 +10,12 @@ import java.util.stream.Collectors;
 @Service
 public class DisciplineService {
     private final DisciplineRepository disciplineRepository;
+    private final ParticipantRepository participantRepository;
 
 
-    public DisciplineService(DisciplineRepository disciplineRepository) {
+    public DisciplineService(DisciplineRepository disciplineRepository, ParticipantRepository participantRepository) {
         this.disciplineRepository = disciplineRepository;
+        this.participantRepository = participantRepository;
     }
 
     public List<DisciplineDTO> getAllDisciplines() {
@@ -53,6 +57,9 @@ public class DisciplineService {
         disciplineDTO.setId(discipline.getId());
         disciplineDTO.setName(discipline.getName());
         disciplineDTO.setResultType(discipline.getResultType());
+        disciplineDTO.setParticipantNames(discipline.getParticipants().stream()
+                .map(Participant::getName)
+                .collect(Collectors.toSet()));
 
         return disciplineDTO;
     }

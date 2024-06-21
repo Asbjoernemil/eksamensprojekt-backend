@@ -21,9 +21,6 @@ public class InitData implements CommandLineRunner {
     private final ParticipantRepository participantRepository;
     private final ResultRepository resultRepository;
 
-    private List<Discipline> disciplines;
-    private List<Participant> participants;
-
     public InitData(DisciplineRepository disciplineRepository, ParticipantRepository participantRepository, ResultRepository resultRepository) {
         this.disciplineRepository = disciplineRepository;
         this.participantRepository = participantRepository;
@@ -34,7 +31,6 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) {
         System.out.println("Hello from InitData");
         createDisciplinesAndParticipants();
-
     }
 
     public void createDisciplinesAndParticipants() {
@@ -50,9 +46,13 @@ public class InitData implements CommandLineRunner {
         disciplineRepository.save(discipline4);
 
         // Adding some participants
-        Participant participant1 = new Participant("John Doe", Participant.Gender.MALE, 25, "Athletics Club A");
-        Participant participant2 = new Participant("Jane Doe", Participant.Gender.FEMALE, 28, "Athletics Club B");
-        Participant participant3 = new Participant("Mike Smith", Participant.Gender.MALE, 30, "Athletics Club C");
+        LocalDate johnBirthDate = LocalDate.of(1999, 5, 15);
+        LocalDate janeBirthDate = LocalDate.of(1995, 9, 22);
+        LocalDate mikeBirthDate = LocalDate.of(1990, 7, 10);
+
+        Participant participant1 = new Participant("John Doe", Participant.Gender.MALE, johnBirthDate, "Athletics Club A");
+        Participant participant2 = new Participant("Jane Doe", Participant.Gender.FEMALE, janeBirthDate, "Athletics Club B");
+        Participant participant3 = new Participant("Mike Smith", Participant.Gender.MALE, mikeBirthDate, "Athletics Club C");
 
         Set<Discipline> johnDisciplines = new HashSet<>();
         johnDisciplines.add(discipline1);
@@ -84,6 +84,4 @@ public class InitData implements CommandLineRunner {
         Result result = new Result(participant, discipline, date, resultValue);
         resultRepository.save(result);
     }
-
-
 }

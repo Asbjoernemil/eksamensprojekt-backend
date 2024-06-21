@@ -22,4 +22,7 @@ public class ResultDTO {
         private LocalDate date;
 
 
+        public ResultDTO(String s) {
+
+        }
 }

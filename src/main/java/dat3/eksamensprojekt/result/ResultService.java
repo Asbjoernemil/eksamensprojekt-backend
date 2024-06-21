@@ -1,10 +1,8 @@
 package dat3.eksamensprojekt.result;
 
 import dat3.eksamensprojekt.discipline.Discipline;
-import dat3.eksamensprojekt.discipline.DisciplineDTO;
 import dat3.eksamensprojekt.discipline.DisciplineRepository;
 import dat3.eksamensprojekt.participant.Participant;
-import dat3.eksamensprojekt.participant.ParticipantDTO;
 import dat3.eksamensprojekt.participant.ParticipantRepository;
 import org.springframework.stereotype.Service;
 
@@ -54,25 +52,52 @@ public class ResultService {
         Result existingResult = resultRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Result not found with ID: " + id));
 
+        // Validate participant name
+        if (resultDTO.getParticipantName() == null || resultDTO.getParticipantName().isEmpty()) {
+            throw new IllegalArgumentException("Participant name is null or empty");
+        }
+
+        // Validate discipline name
+        if (resultDTO.getDisciplineName() == null || resultDTO.getDisciplineName().isEmpty()) {
+            throw new IllegalArgumentException("Discipline name is null or empty");
+        }
+
+        // Retrieve participant from repository
         Participant participant = participantRepository.findByName(resultDTO.getParticipantName())
                 .orElseThrow(() -> new IllegalArgumentException("Participant not found with name: " + resultDTO.getParticipantName()));
+
+        // Retrieve discipline from repository
         Discipline discipline = disciplineRepository.findByName(resultDTO.getDisciplineName())
                 .orElseThrow(() -> new IllegalArgumentException("Discipline not found with name: " + resultDTO.getDisciplineName()));
 
+        // Update existing result with new values
         existingResult.setParticipant(participant);
         existingResult.setDiscipline(discipline);
         existingResult.setDate(resultDTO.getDate());
         existingResult.setResultValue(resultDTO.getResultValue());
 
+        // Save updated result in repository
         resultRepository.save(existingResult);
 
+        // Convert and return DTO
         return convertToDTO(existingResult);
     }
+
 
     public void deleteResult(Long id) {
         Result result = resultRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Result not found with ID: " + id));
         resultRepository.delete(result);
+    }
+
+    public List<ResultDTO> getResultsByParticipantName(String name) {
+        List<Result> results = resultRepository.findByParticipantName(name);
+        return results.stream().map(this::convertToDTO).toList();
+    }
+
+    public List<ResultDTO> getResultsByDisciplineName(String name) {
+        List<Result> results = resultRepository.findByDisciplineName(name);
+        return results.stream().map(this::convertToDTO).toList();
     }
 
 
@@ -89,4 +114,8 @@ public class ResultService {
         }
 
 
+    public List<ResultDTO> getResultsByParticipantId(Long participantId) {
+        List<Result> results = resultRepository.findByParticipantId(participantId);
+        return results.stream().map(this::convertToDTO).toList();
+    }
 }

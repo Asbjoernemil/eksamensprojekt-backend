@@ -1,5 +1,6 @@
 package dat3.eksamensprojekt.result;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,18 @@ public class ResultController {
         return resultDTO != null ? ResponseEntity.ok(resultDTO) : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/participant/{participantId}")
+    public ResponseEntity<List<ResultDTO>> getResultsForParticipantById(@PathVariable Long participantId) {
+        List<ResultDTO> results = resultService.getResultsByParticipantId(participantId);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/participant/name/{name}")
+    public ResponseEntity<List<ResultDTO>> getResultsForParticipantByName(@PathVariable String name) {
+        List<ResultDTO> results = resultService.getResultsByParticipantName(name);
+        return ResponseEntity.ok(results);
+    }
+
     @PostMapping
     public ResponseEntity<ResultDTO> createResult(@RequestBody ResultDTO resultDTO) {
         ResultDTO createdResult = resultService.createResult(resultDTO);
@@ -35,11 +48,18 @@ public class ResultController {
 
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ResultDTO> updateResult(@PathVariable Long id, @RequestBody ResultDTO resultDTO) {
-        ResultDTO updatedResult = resultService.updateResult(id, resultDTO);
-        return updatedResult != null ? ResponseEntity.ok(updatedResult) : ResponseEntity.notFound().build();
+        try {
+            ResultDTO updatedResult = resultService.updateResult(id, resultDTO);
+            return ResponseEntity.ok(updatedResult);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ResultDTO("Error updating result: " + e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResultDTO("Internal server error occurred"));
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteResult(@PathVariable Long id) {

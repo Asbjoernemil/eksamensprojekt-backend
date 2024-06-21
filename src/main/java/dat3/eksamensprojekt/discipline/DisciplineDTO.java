@@ -20,4 +20,17 @@ public class DisciplineDTO {
         private Discipline.ResultType resultType;
         private Set<String> participantsNames = new HashSet<>();
 
+        public DisciplineDTO(Discipline discipline) {
+        }
+
+        public void setParticipantNames(Set<String> participantsNames) {
+                this.participantsNames = participantsNames;
+
+        }
+
+        public DisciplineDTO(Long id, String name, Discipline.ResultType resultType) {
+                this.id = id;
+                this.name = name;
+                this.resultType = resultType;
+        }
 }

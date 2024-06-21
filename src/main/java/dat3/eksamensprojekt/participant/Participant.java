@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Setter
     private LocalDate birthDate;
     private String club;
 
@@ -53,6 +55,16 @@ private Set<Discipline> disciplines = new HashSet<>();
     public enum Gender {
         MALE,
         FEMALE
+    }
+
+    public int getAge() {
+        if (birthDate == null) {
+            return 0; // Return 0 or handle accordingly if birthDate is not set
+        }
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDate, currentDate).getYears();
+    }
+    public void setAge(int age) {
     }
 
 

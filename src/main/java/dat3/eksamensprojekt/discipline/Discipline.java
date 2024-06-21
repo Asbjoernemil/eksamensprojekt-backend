@@ -35,6 +35,7 @@ public class Discipline {
     public Discipline() {
     }
 
+
     public enum ResultType {
         TIME,
         DISTANCE,

@@ -4,6 +4,7 @@ import dat3.eksamensprojekt.discipline.Discipline;
 import dat3.eksamensprojekt.discipline.DisciplineDTO;
 import dat3.eksamensprojekt.discipline.DisciplineRepository;
 import org.springframework.stereotype.Service;
+import dat3.eksamensprojekt.discipline.DisciplineService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,11 +15,14 @@ import java.util.stream.Collectors;
 public class ParticipantService {
     private final ParticipantRepository participantRepository;
     private final DisciplineRepository disciplineRepository;
+    private final DisciplineService disciplineService;
 
 
- public ParticipantService(ParticipantRepository participantRepository, DisciplineRepository disciplineRepository) {
+
+ public ParticipantService(ParticipantRepository participantRepository, DisciplineRepository disciplineRepository, DisciplineService disciplineService){
           this.participantRepository = participantRepository;
      this.disciplineRepository = disciplineRepository;
+     this.disciplineService = disciplineService;
  }
 
 public List<ParticipantDTO> getAllParticipants() {
@@ -35,6 +39,10 @@ public List<ParticipantDTO> getAllParticipants() {
         participantDTO.setAge(participant.getAge());
         participantDTO.setGender(participant.getGender());
         participantDTO.setClub(participant.getClub());
+
+        participantDTO.setDiscipline(participant.getDisciplines().stream()
+                .map(disciplineService::convertToDTO)
+                .collect(Collectors.toSet()));
 
         return participantDTO;
     }

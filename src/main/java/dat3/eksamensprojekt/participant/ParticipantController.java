@@ -34,7 +34,7 @@ public class ParticipantController {
         return participantService.createParticipant(participant);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ParticipantDTO> updateParticipant(@PathVariable Long id, @RequestBody ParticipantDTO participant) {
         ParticipantDTO updatedParticipant = participantService.updateParticipant(id, participant);
         return updatedParticipant != null ? ResponseEntity.ok(updatedParticipant) : ResponseEntity.notFound().build();
